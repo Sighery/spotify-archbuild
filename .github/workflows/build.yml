@@ -16,6 +16,9 @@ jobs:
       - name: Permissions hack
         run: chown -R builder .
 
+      - name: Install git
+        run: pacman -S --needed --noconfirm git
+
       - uses: actions/checkout@v2
 
       - name: Checkout submodules
@@ -32,7 +35,7 @@ jobs:
 
       - name: Import Spotify GPG keys
         run: >
-          curl -sS https://download.spotify.com/debian/pubkey.gpg 
+          curl -sS https://download.spotify.com/debian/pubkey.gpg
           | gpg --import -
 
       - name: Build package
