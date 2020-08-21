@@ -1,0 +1,10 @@
+*.tar.zst
+*.tar.xz
+*.tar.gz
+*.zip
+src/*
+pkg/*
+*.log
+
+# Builds from Docker image
+output/

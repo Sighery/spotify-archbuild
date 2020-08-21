@@ -1,0 +1,49 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: 'sighery/archbuilder:latest'
+
+    steps:
+      - name: Permissions hack
+        run: chown -R builder .
+
+      - uses: actions/checkout@v2
+
+      - name: Remove PKGDEST from /etc/makepkg.conf
+        run: sed -i '/^PKGDEST=/ d' /etc/makepkg.conf
+
+      - name: Fetch pkgname
+        working-directory: spotify
+        run: |
+          pkgname=`sed -n 's/^pkgname=\(.\+\)/\1/p' < PKGBUILD`
+          echo "::set-env name=PKGNAME::${pkgname}"
+
+      - name: Import Spotify GPG keys
+        run: >
+          curl -sS https://download.spotify.com/debian/pubkey.gpg 
+          | gpg --import -
+
+      - name: Build package
+        working-directory: spotify
+        run: |
+          sudo -u builder bash -c 'makepkg --syncdeps --needed --noconfirm'
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.PKGNAME }}
+          path: ${{ env.PKGNAME}}/${{ env.PKGNAME }}-*.pkg.tar.*
+          if-no-files-found: error
+
+      - uses: Sighery/artifact-webhook@v1
+        with:
+          webhook-url: ${{ secrets.ARTIFACT_WEBHOOK }}
+          secret: ${{ secrets.WEBHOOK_SECRET }}

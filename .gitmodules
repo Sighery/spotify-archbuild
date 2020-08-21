@@ -1,0 +1,3 @@
+[submodule "spotify"]
+	path = spotify
+	url = https://aur.archlinux.org/spotify.git
