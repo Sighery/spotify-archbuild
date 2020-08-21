@@ -54,8 +54,3 @@ jobs:
           name: ${{ env.PKGNAME }}
           path: ${{ env.PKGNAME}}/${{ env.PKGNAME }}.tar.gz
           if-no-files-found: error
-
-      - uses: Sighery/artifact-webhook@v1
-        with:
-          webhook-url: ${{ secrets.ARTIFACT_WEBHOOK }}
-          secret: ${{ secrets.WEBHOOK_SECRET }}
