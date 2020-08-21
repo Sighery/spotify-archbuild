@@ -18,6 +18,9 @@ jobs:
 
       - uses: actions/checkout@v2
 
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+
       - name: Remove PKGDEST from /etc/makepkg.conf
         run: sed -i '/^PKGDEST=/ d' /etc/makepkg.conf
 
