@@ -45,10 +45,14 @@ jobs:
           chown -R builder .
           sudo -u builder bash -c 'makepkg --syncdeps --needed --noconfirm'
 
+      - name: Tar package
+        working-directory: spotify
+        run: tar -czvf ${{ env.PKGNAME }}.tar.gz ${{ env.PKGNAME }}-*.pkg.tar.*
+
       - uses: actions/upload-artifact@v2
         with:
           name: ${{ env.PKGNAME }}
-          path: ${{ env.PKGNAME}}/${{ env.PKGNAME }}-*.pkg.tar.*
+          path: ${{ env.PKGNAME}}/${{ env.PKGNAME }}.tar.gz
           if-no-files-found: error
 
       - uses: Sighery/artifact-webhook@v1
