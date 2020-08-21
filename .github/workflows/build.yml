@@ -41,6 +41,7 @@ jobs:
       - name: Build package
         working-directory: spotify
         run: |
+          chown -R builder .
           sudo -u builder bash -c 'makepkg --syncdeps --needed --noconfirm'
 
       - uses: actions/upload-artifact@v2
