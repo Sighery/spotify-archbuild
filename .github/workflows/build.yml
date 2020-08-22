@@ -16,6 +16,9 @@ jobs:
       - name: Permissions hack
         run: chown -R builder .
 
+      - name: Update databases
+        run: pacman -Syy --noconfirm
+
       - name: Install git
         run: pacman -S --needed --noconfirm git
 
