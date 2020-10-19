@@ -39,7 +39,7 @@ jobs:
       - name: Import Spotify GPG keys
         run: >
           sudo -u builder bash -c
-          'curl -sS https://download.spotify.com/debian/pubkey.gpg
+          'curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg
           | gpg --import -'
 
       - name: Build package
