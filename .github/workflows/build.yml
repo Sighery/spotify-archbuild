@@ -34,7 +34,7 @@ jobs:
         working-directory: spotify
         run: |
           source ./PKGBUILD
-          echo "::set-env name=PKGNAME::${pkgname}"
+          echo "PKGNAME=${pkgname}" >> $GITHUB_ENV
 
       - name: Import Spotify GPG keys
         run: >
